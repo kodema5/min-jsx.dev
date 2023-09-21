@@ -15,10 +15,11 @@ let App = () => {
 
 
     React.useEffect(() => {
-        let psId = appChannel.on('message', (data) => setState(data))
-
+        let psId = appChannel.on({
+            'message': (data) => setState(data),
+        })
         return () => appChannel.off(psId)
-    }, [state])
+    }, [])
 
 
     return <>
@@ -30,7 +31,9 @@ let App = () => {
             className="btn btn-primary"
             onClick={() => {
                 setTimeout(() => {
-                    appChannel.post('message', (new Date()).toLocaleString())
+                    appChannel.post({
+                        'message': (new Date()).toLocaleString(),
+                    })
                 }, 10)
             }}
             title="simulate external js call."
