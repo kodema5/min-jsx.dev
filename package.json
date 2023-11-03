@@ -1,15 +1,17 @@
 {
     "scripts": {
-        "build": "esbuild src/app.jsx --bundle --minify --sourcemap --watch=forever --target=es2020 --outfile=www/app.min.js",
+        "build": "node build.mjs",
         "serve": "live-server ./www",
         "dev": "npm run build & npm run serve"
     },
     "devDependencies": {
+        "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
         "esbuild": "^0.19.1",
         "live-server": "^1.2.2"
     },
     "dependencies": {
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "styled-components": "^6.1.0"
     }
 }

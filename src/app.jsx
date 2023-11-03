@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom'
 import { Channel } from './channel'
 import { Last } from './last'
 
