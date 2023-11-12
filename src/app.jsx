@@ -1,17 +1,61 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom'
-import { Channel } from './channel'
-import { Last } from './last'
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Channel, Current, } from 'lib'
 
-let last = new Last('app', { state:'world' })
+// import { Channel } from './channel'
+// import { Current } from './current'
+
+// import { Popover, ArrowContainer } from "react-tiny-popover"
+// import { usePopper } from 'react-popper';
+
+let curr = new Current('app', { state:'world' })
 
 export let appChannel = new Channel()
 
 
+const popover = (
+    <Popover id="popover-basic">
+        <Popover.Header as="h3">Popover right</Popover.Header>
+        <Popover.Body>
+            And here's some <strong>amazing</strong> content. It's very engaging.
+            right?
+        </Popover.Body>
+    </Popover>
+)
+
+const Example = () => (
+    <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+        <Button variant="success">hover</Button>
+    </OverlayTrigger>
+)
+
+
+// web-component supports is considered experimental
+class XSearch extends HTMLElement {
+    connectedCallback() {
+
+        const linkPoint = document.createElement('link')
+        linkPoint.setAttribute('rel', 'stylesheet')
+        linkPoint.setAttribute('href', 'react/bootstrap.min.css')
+
+        const mountPoint = document.createElement('div');
+        const shadowRoot = this.attachShadow({ mode: 'open' })
+        shadowRoot.appendChild(linkPoint)
+        shadowRoot.appendChild(mountPoint);
+
+        const root = ReactDOM.createRoot(mountPoint);
+        root.render(<>
+            <Example></Example>
+        </>)
+    }
+}
+customElements.define('x-search', XSearch)
+
 let App = () => {
 
-    let [state, setState_] = React.useState(last.state)
-    let setState = (a) => setState_(last.set('state', a))
+    let [state, setState_] = React.useState(curr.state)
+    let setState = (a) => setState_(curr.set('state', a))
 
 
     React.useEffect(() => {
@@ -42,8 +86,8 @@ let App = () => {
         <button
             className="btn btn-primary ms-2"
             onClick={() => {
-                last.reset()
-                setState(last.state)
+                curr.reset()
+                setState(curr.state)
             }}
         >reset values</button>
 
@@ -54,8 +98,11 @@ let App = () => {
             }}
         >reload page</button>
 
+        {/* <Example/>
+        <x-search name={"hello"}></x-search> */}
 
         </div></div></div>
+
     </>
 }
 

@@ -1,8 +1,7 @@
 {
     "scripts": {
         "build": "node build.mjs",
-        "serve": "live-server ./www",
-        "dev": "npm run build & npm run serve"
+        "serve": "live-server ./www"
     },
     "devDependencies": {
         "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
@@ -10,8 +9,11 @@
         "live-server": "^1.2.2"
     },
     "dependencies": {
+        "bootstrap": "^5.3.2",
+        "lib": "file:lib",
+        "material-symbols": "^0.13.2",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "styled-components": "^6.1.0"
+        "react-bootstrap": "^2.9.1",
+        "react-dom": "^18.2.0"
     }
 }
