@@ -14,9 +14,9 @@
     <script defer id="react-dom" src="resources/react-dom.production.min.js"></script>
     <script defer id="react-bootstrap" src="resources/react-bootstrap.min.js"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js');
-        }
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('service-worker.js');
+        // }
         window.addEventListener('load', () => {
             document.body.appendChild((() => {
             let src = ((new URLSearchParams(document.location.search)).get('app') || 'app') + '.js'

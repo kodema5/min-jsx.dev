@@ -1,10 +1,14 @@
 // https://googlechrome.github.io/samples/service-worker/basic/
-//
+// https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Tutorials/CycleTracker/Service_workers
 
-let PRECACHE = 'precache-v1'
+let VERSION = "v1"
+let CACHE_NAME = `precache-${VERSION}`
 let RUNTIME = 'runtime'
-let PRECACHE_URLS = [
+
+let CACHE_URLS = [
+    './',
     'index.html',
+    './app.js',
     './resources/bootstrap.min.css',
     './resources/material-symbols-outlined.css',
     './resources/material-symbols-outlined.woff2',
@@ -15,19 +19,19 @@ let PRECACHE_URLS = [
 
 
 self.addEventListener('install', event => {
-    event.awaitUntil(
-        caches.open(PRECACHE)
-        .then(c => c.addAll(PRECACHE_URLS))
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(c => c.addAll(CACHE_URLS))
         .then(self.skipWaiting())
     )
 })
 
 
 self.addEventListener('activate', event => {
-    let ns = [PRECACHE, RUNTIME]
-    event.awaitUntil(
+    let cacheNames = [CACHE_NAME, RUNTIME]
+    event.waitUntil(
         caches.keys()
-        .then(names => names.filter(n => !ns.includes(n)))
+        .then(names => names.filter(n => !cacheNames.includes(n)))
         .then(cachesToDelete => Promise.all(
             cachesToDelete.map(a => caches.delete(a))))
         .then(() => self.clients.claim())
@@ -35,21 +39,24 @@ self.addEventListener('activate', event => {
 })
 
 
-// if fetch of data, storages can be better alternatives
+// if fetch of data, storages can be better alternatives?
 //
-// self.addEventListener('fetch', event => {
-//     let isToCache = event.request.url.startsWith(self.location.origin)
-//     if (!isToCache) return
+self.addEventListener('fetch', event => {
+    let isToCache = event.request.url.startsWith(self.location.origin)
+    if (!isToCache) return
 
-//     event.respondWith(
-//         caches.match(event.request)
-//         .then(cached => cached
-//             || caches.open(RUNTIME)
-//                 .then(cache =>
-//                     fetch(event.request)
-//                     .then(res =>
-//                         cache.put(event.request, res.clone())
-//                         .then(() => res)
-//                     )))
-//     )
-// })
+    event.respondWith(
+        caches
+        .match(event.request)
+        .then(cached => cached
+            || caches
+                .open(RUNTIME)
+                .then(cache =>
+                    fetch(event.request)
+                    .then(res =>
+                        cache
+                        .put(event.request, res.clone())
+                        .then(() => res)
+                    )))
+    )
+})

@@ -2,15 +2,9 @@ import * as React from 'react'
 import { createRoot } from 'react-dom'
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap'
 import { Channel, Current, } from 'lib'
-
-// import { Channel } from './channel'
-// import { Current } from './current'
-
-// import { Popover, ArrowContainer } from "react-tiny-popover"
-// import { usePopper } from 'react-popper';
+import './cmp/hello-web-component'
 
 let curr = new Current('app', { state:'world' })
-
 export let appChannel = new Channel()
 
 
@@ -31,27 +25,6 @@ const Example = () => (
 )
 
 
-// web-component supports is considered experimental
-class XSearch extends HTMLElement {
-    connectedCallback() {
-
-        const linkPoint = document.createElement('link')
-        linkPoint.setAttribute('rel', 'stylesheet')
-        linkPoint.setAttribute('href', 'react/bootstrap.min.css')
-
-        const mountPoint = document.createElement('div');
-        const shadowRoot = this.attachShadow({ mode: 'open' })
-        shadowRoot.appendChild(linkPoint)
-        shadowRoot.appendChild(mountPoint);
-
-        const root = ReactDOM.createRoot(mountPoint);
-        root.render(<>
-            <Example></Example>
-        </>)
-    }
-}
-customElements.define('x-search', XSearch)
-
 let App = () => {
 
     let [state, setState_] = React.useState(curr.state)
@@ -68,6 +41,13 @@ let App = () => {
 
     return <>
         <div className='container'>
+
+        <div className="row"><div className="col">
+        <hello-web-component data-say="foo">
+            <b>welcome</b>
+        </hello-web-component>
+        </div></div>
+
         <div className="row"><div className="col">
         <h1>Hello, {state}!</h1>
 
@@ -98,8 +78,8 @@ let App = () => {
             }}
         >reload page</button>
 
-        {/* <Example/>
-        <x-search name={"hello"}></x-search> */}
+        <Example/>
+        {/* <x-search name={"hello"}></x-search> */}
 
         </div></div></div>
 
