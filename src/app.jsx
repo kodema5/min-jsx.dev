@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createRoot } from 'react-dom'
 import { Channel, Current, } from 'lib'
 import './cmp/hello-web-component'
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from 'react-tooltip' // approx 34k extra
 
 let curr = new Current('app', { state:'world' })
 export let appChannel = new Channel()
@@ -15,10 +15,9 @@ let App = () => {
 
 
     React.useEffect(() => {
-        let psId = appChannel.on({
+        return appChannel.onFn({
             'message': (data) => setState(data),
         })
-        return () => appChannel.off(psId)
     }, [])
 
 
