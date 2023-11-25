@@ -3,7 +3,6 @@ import { globalExternals } from "@fal-works/esbuild-plugin-global-externals";
 import * as React from "react";
 // import * as Styled from "styled-components";
 import * as ReactDOM from "react-dom";
-import * as ReactBootstrap from "react-bootstrap";
 
 const globals = {
   // "styled-components": {
@@ -18,10 +17,6 @@ const globals = {
         varName: "ReactDOM",
         namedExports: Object.keys(ReactDOM).filter((key) => key !== "default"),
     },
-    "react-bootstrap": {
-        varName: "ReactBootstrap",
-        namedExports: Object.keys(ReactBootstrap).filter((key) => key !== "default"),
-    }
 }
 
 try {
@@ -37,7 +32,7 @@ try {
         },
         target: ['es2020'],
         // format: "esm",
-        external: ["react", "react-dom", "react-boostrap"],
+        external: ["react", "react-dom"],
         plugins: [
             globalExternals(globals),
             {

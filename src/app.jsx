@@ -1,28 +1,11 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom'
-import { Button, OverlayTrigger, Popover } from 'react-bootstrap'
 import { Channel, Current, } from 'lib'
 import './cmp/hello-web-component'
+import { Tooltip } from 'react-tooltip'
 
 let curr = new Current('app', { state:'world' })
 export let appChannel = new Channel()
-
-
-const popover = (
-    <Popover id="popover-basic">
-        <Popover.Header as="h3">Popover right</Popover.Header>
-        <Popover.Body>
-            And here's some <strong>amazing</strong> content. It's very engaging.
-            right?
-        </Popover.Body>
-    </Popover>
-)
-
-const Example = () => (
-    <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
-        <Button variant="success">hover</Button>
-    </OverlayTrigger>
-)
 
 
 let App = () => {
@@ -52,6 +35,10 @@ let App = () => {
         <h1>Hello, {state}!</h1>
 
         <button
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="updates the message with local time"
+            data-tooltip-place="bottom"
+
             className="btn btn-primary"
             onClick={() => {
                 setTimeout(() => {
@@ -64,6 +51,10 @@ let App = () => {
         >post a local time</button>
 
         <button
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="reset message"
+            data-tooltip-place="bottom"
+
             className="btn btn-primary ms-2"
             onClick={() => {
                 curr.reset()
@@ -72,17 +63,18 @@ let App = () => {
         >reset values</button>
 
         <button
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="reload page with last message"
+
             className="btn btn-primary ms-2"
             onClick={() => {
                 document.location.reload()
             }}
         >reload page</button>
 
-        <Example/>
-        {/* <x-search name={"hello"}></x-search> */}
 
         </div></div></div>
-
+        <Tooltip id="my-tooltip" />
     </>
 }
 

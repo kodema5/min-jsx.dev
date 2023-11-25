@@ -12,9 +12,9 @@ let CACHE_URLS = [
     './resources/bootstrap.min.css',
     './resources/material-symbols-outlined.css',
     './resources/material-symbols-outlined.woff2',
+    './resources/react-tooltip.min.css',
     './resources/react.production.min.js',
-    './resources/react-dom.production.min.js',
-    './resources/react-bootstrap.min.js'
+    './resources/react-dom.production.min.js'
 ]
 
 
