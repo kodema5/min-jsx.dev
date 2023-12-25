@@ -77,5 +77,19 @@ let App = () => {
     </>
 }
 
-let root = createRoot(document.getElementById('root'))
+
+
+let args = (() => {
+    let rootId = 'root'
+    try {
+        let src = document.currentScript.src
+        rootId = (new URL(src)).searchParams.get('root')
+    } catch(x) {
+    }
+
+    let rootEl = document.getElementById(rootId)
+    return { rootId, rootEl }
+})()
+
+let root = createRoot(args.rootEl)
 root.render(<App />)

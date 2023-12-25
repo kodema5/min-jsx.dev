@@ -19,7 +19,7 @@
         // }
         window.addEventListener('load', () => {
             document.body.appendChild((() => {
-            let src = ((new URLSearchParams(document.location.search)).get('app') || 'app') + '.js'
+            let src = ((new URLSearchParams(document.location.search)).get('app') || 'app') + '.js?root=root1'
             let el = document.createElement('script')
             el.setAttribute('id', 'app')
             el.setAttribute('defer', '')
@@ -31,7 +31,7 @@
     </head>
 
     <body>
-        <div id="root" class="h-100">
+        <div id="root1" class="h-100">
             <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-center" role="status" style="width:5rem;height:5rem">
                 <span class="visually-hidden">Loading...</span>
