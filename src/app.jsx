@@ -1,12 +1,10 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom'
-import { Channel, Current, } from 'lib'
+import { Current, pubsub, } from 'lib'
 import './cmp/hello-web-component'
 import { Tooltip } from 'react-tooltip' // approx 34k extra
 
 let curr = new Current('app', { state:'world' })
-export let appChannel = new Channel()
-
 
 let App = () => {
 
@@ -15,8 +13,9 @@ let App = () => {
 
 
     React.useEffect(() => {
-        return appChannel.onFn({
+        return pubsub.onFn({
             'message': (data) => setState(data),
+            'hello_click.app': (data) => setState(data),
         })
     }, [])
 
@@ -25,8 +24,15 @@ let App = () => {
         <div className='container'>
 
         <div className="row"><div className="col">
-        <hello-web-component data-say="foo">
-            <b>welcome</b>
+        <hello-web-component
+            data-say="foo"
+            data-on-click="hello_click"
+
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="updates the message with data-say variable"
+            data-tooltip-place="bottom"
+        >
+            <b>welcome click foo</b>
         </hello-web-component>
         </div></div>
 
@@ -41,7 +47,7 @@ let App = () => {
             className="btn btn-primary"
             onClick={() => {
                 setTimeout(() => {
-                    appChannel.post({
+                    pubsub.post({
                         'message': (new Date()).toLocaleString(),
                     })
                 }, 10)
